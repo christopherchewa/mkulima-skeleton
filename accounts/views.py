@@ -23,10 +23,31 @@ from .models import (
 
 User = get_user_model()
 
+class UserLoginForm(forms.Form):
+	username = forms.CharField(max_length=255, required=True, label='Username')
+	password = forms.CharField(widget=forms.PasswordInput(), required=True, label='Password')
+
+	def clean(self, *args, **kwargs):
+		username = self.cleaned_data.get("username")
+		password = self.cleaned_data.get("password")
+		
+		if username and password:
+			user = authenticate(username=username, password=password)
+			if not user or not user.is_active:
+				raise forms.ValidationError("Sorry invalid login details. Try again")
+
+		return super(UserLoginForm, self).clean(*args, **kwargs)
+		
+	def login(self, request):
+		username = self.cleaned_data.get("username")
+		password = self.cleaned_data.get("password")
+		user = authenticate(username=username, password=password)
+		return user
+
 class UserRegistrationForm(forms.ModelForm):
-	email = forms.EmailField(label='Email Address')
-	email2 = forms.EmailField(label='Confirm Email')
-	password = forms.CharField(widget=forms.PasswordInput())
+	email = forms.EmailField(label='Email Address', required=True)
+	email2 = forms.EmailField(label='Confirm Email', required=True)
+	password = forms.CharField(widget=forms.PasswordInput(), required=True, label='Password',)
 
 	class Meta:
 		model = User
@@ -85,6 +106,22 @@ class ProductForm(forms.ModelForm):
 	class Meta:
 		model = Product
 		fields = ['name', 'price']
+
+
+def login_view(request, template_name="myauthapp/login.html"):
+	
+	next = request.GET.get("next")
+
+	form = UserLoginForm(request.POST or None)
+	if request.POST and form.is_valid():
+		user = form.login(request)
+		if user:
+			login(request, user)
+			if next:
+				return redirect(next)
+	
+			return HttpResponseRedirect('/index/')
+	return render(request, template_name, {'form':form})
 
 
 def admin_register_view(request, template_name="registration_form.html"):
