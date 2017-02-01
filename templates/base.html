@@ -1,0 +1,59 @@
+{%  load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type ="text/css" >
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+
+	<title>{% block head_title %} Try Django 1.9{% endblock head_title %}</title>
+
+	
+
+	<style>
+	{% block style %} 
+
+	{% endblock style %}	
+	</style>
+
+	{% block head_extra %} {% endblock head_extra %}
+</head>
+<body>
+
+
+<div class="container">
+<h1>TryDjango1.9</h1>
+</div>
+
+
+<div class="container">
+	
+ {% block content %}
+
+
+ {% endblock %}
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="{% static 'js/mkulima-ajax.js' %}"></script>
+
+  
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+
+
+
+
+
+
+</body>
+</html>

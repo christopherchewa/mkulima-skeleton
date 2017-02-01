@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+
+
+<div class="col-sm-6 col-sm-offset-3">
+<h1>Product List</h1>
+	
+
+
+<hr>
+
+
+
+
+
+{% for product in products %}
+
+	{{product.name}}
+	
+	<strong id="tap_count">{{product.likes}}</strong>
+	<br>
+
+
+		<button id="taps" class="btn btn-primary" data-productid="{{product.id}}" type="button">Tap</button>
+		<br>
+		<button id="trashes" class="btn btn-primary" data-productid="{{product.id}}" type="button">Trash</button>
+	
+	</div>
+	
+{% endfor %}
+
+
+
+</div>
+{% endblock %}
+

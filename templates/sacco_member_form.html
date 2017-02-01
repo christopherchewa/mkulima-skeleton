@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+
+{% block content %}
+
+
+
+<div class="col-sm-6 col-sm-offset-3">
+<h1>Register sacco member</h1>
+
+<h2>{{admin_name}}</h2>
+<h3>{{sacco_name}}</h3>
+
+	
+
+
+<hr>
+
+
+<form method="POST" action="" enctype="multipart/form-data">
+{% csrf_token %}
+
+{{addsaccomembersform | crispy}}
+{{saccomemberform | crispy}}
+
+<input type="submit" class="btn btn-primary" name="submit" value="Add Member">
+</form>
+
+</div>
+{% endblock %}
+
